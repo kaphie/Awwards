@@ -1,10 +1,11 @@
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 
 class Profile(models.Model):
-    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True)
+    profile_picture = CloudinaryField('image')
     prof_user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
     bio = models.TextField(default="")
     contact_info = models.CharField(max_length=200, blank=True)
@@ -37,7 +38,7 @@ class Project(models.Model):
     details = models.TextField()
     link = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.PROTECT, null=True)
-    image = models.ImageField(upload_to='project_images', blank=True)
+    image = CloudinaryField('image')
     user_project_id = models.IntegerField(default=0)
     design = models.IntegerField(choices=list(zip(range(0, 11), range(0, 11))), default=0)
     usability = models.IntegerField(choices=list(zip(range(0, 11), range(0, 11))), default=0)

@@ -6,6 +6,8 @@ from .forms import *
 
 
 def index(request):
+    profile = Profile.objects.get(prof_user__username=request.user.username)
+   
     if request.method == "POST":
         form = PostForm(request.POST)
         if form.is_valid():
@@ -20,7 +22,7 @@ def index(request):
         print(posts)
     except Project.DoesNotExist:
         posts = None
-    return render(request, 'main/index.html', {'posts': posts, 'form': form})
+    return render(request, 'main/index.html', {'posts': posts, 'form': form, 'profile':profile})
 
 
 def signup(request):
@@ -44,7 +46,13 @@ def signup(request):
 
 @login_required(login_url='login')
 def profile(request, username):
-    return render(request, 'profile/profile.html')
+    profile = Profile.objects.get(prof_user__username=request.user.username)
+    print("profile", profile)
+   
+    profile_data = {
+        'profile': profile
+    }
+    return render(request, 'profile/profile.html', profile_data)
 
 
 @login_required(login_url='login')
@@ -69,21 +77,17 @@ def edit_profile(request, username):
 
 def upload(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.user = request.user
             post.save()
+            return redirect('home')
     else:
         form = PostForm()
 
-    try:
-        posts = Project.objects.all()
-        print(posts)
-    except Project.DoesNotExist:
-        posts = None
-        return redirect('home')
-    return render(request, 'main/upload.html', {'posts': posts, 'form': form})
+
+    return render(request, 'main/upload.html', {'form': form})
 
 
 def home(request):
@@ -105,13 +109,10 @@ def rate(request):
     return render('main/view_project.html', rate_params)
 
 
-def profile_view(request):
-    profile = Profile.get_profile_data()
-    profile_data = {
-        'profile': profile
-    }
+# def profile_view(request):
+    
 
-    return render('profile/profile.html', profile_data)
+#     return render('profile/profile.html', profile_data)
 
 
 def project_view(request, post):

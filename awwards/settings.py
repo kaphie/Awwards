@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 # os.environ.setdefault("DJANGO_SETTINGS_MODULE", __file__)
 import django
+import cloudinary
 # django.setup()
 
 import dj_database_url
@@ -29,7 +30,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 MODE=config("MODE", default="dev")
 
-SECRET_KEY = "config('SECRET_KEY')"
+#SECRET_KEY = config('SECRET_KEY')
+#print(SECRET_KEY)
+
+SECRET_KEY='etsyngu849'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -49,7 +53,7 @@ INSTALLED_APPS = [
     'myapp',
     'crispy_forms',
     'bootstrap4',
-    'pyuploadcare.dj',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -163,10 +167,12 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-UPLOADCARE = {
-      'pub_key': '36a7f968cdbd63b5bcc3',
-      'secret': 'r9-k$$nt^syg4pe3@(2d@m8m4l%uev_kzwg^c=81bq5ml#v5*w',
-  }
+cloudinary.config( 
+  cloud_name = "awwards", 
+  api_key = "765749693498919", 
+  api_secret = "18UpmsJOybt23x4GbyT5-xUwWh8" 
+)
+
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'home'
