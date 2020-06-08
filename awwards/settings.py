@@ -11,13 +11,16 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-# os.environ.setdefault("DJANGO_SETTINGS_MODULE", __file__)
 import django
 import cloudinary
-# django.setup()
+
+import django_heroku
 
 import dj_database_url
 from decouple import config,Csv
+from dotenv import load_dotenv
+load_dotenv()
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,8 +35,7 @@ MODE=config("MODE", default="dev")
 
 #SECRET_KEY = config('SECRET_KEY')
 #print(SECRET_KEY)
-
-SECRET_KEY='etsyngu849'
+SECRET_KEY='r9-k$$nt^syg4pe3@(2d@m8m4l%uev_kzwg^c=81bq5ml#v5*w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
@@ -177,5 +179,8 @@ cloudinary.config(
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = '/'
+
+# Configure Django App for Heroku.
+django_heroku.settings(locals())
 
 
