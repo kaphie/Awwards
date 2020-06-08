@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from .models import Project, Profile, User
 
-new_user = User(username='vick')
+new_user = User(username='kaphie')
 
 test_project = Project(
     id=1,
