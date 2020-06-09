@@ -3,12 +3,7 @@ A personal blogging website where you can create and share your opinions and oth
 
 # App Screenshots:
 
-## Home View
-<img src="">
-
-## Profile View 
-<img src="">
-
+<img src="https://github.com/kaphie/Awwards/blob/master/media/screencapture-awwards718-herokuapp-2020-06-09-08_22_54.png">
 
 # User stories
 * View posted projects and their details
